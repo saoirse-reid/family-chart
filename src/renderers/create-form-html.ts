@@ -109,41 +109,44 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
   if (!form_creator.editable) return infoField()
   let fields_html = ''
   form_creator.fields.forEach(field => {
-    if (field.type === 'text') {
-      fields_html += `
-      <div class="f3-form-field">
-        <label>${field.label}</label>
-        <input type="${field.type}" 
-          name="${field.id}" 
-          value="${field.initial_value || ''}"
-          placeholder="${field.label}">
-      </div>`
-    } else if (field.type === 'textarea') {
-      fields_html += `
-      <div class="f3-form-field">
-        <label>${field.label}</label>
-        <textarea name="${field.id}" 
-          placeholder="${field.label}">${field.initial_value || ''}</textarea>
-      </div>`
-    } else if (field.type === 'select') {
-      const select_field = field as SelectField
-      fields_html += `
-      <div class="f3-form-field">
-        <label>${select_field.label}</label>
-        <select name="${select_field.id}" value="${select_field.initial_value || ''}">
-          <option value="">${select_field.placeholder || `Select ${select_field.label}`}</option>
-          ${select_field.options.map((option) => `<option ${option.value === select_field.initial_value ? 'selected' : ''} value="${option.value}">${option.label}</option>`).join('')}
-        </select>
-      </div>`
-    } else if (field.type === 'rel_reference') {
-      fields_html += `
-      <div class="f3-form-field">
-        <label>${field.label} - <i>${field.rel_label}</i></label>
-        <input type="text" 
-          name="${field.id}" 
-          value="${field.initial_value || ''}"
-          placeholder="${field.label}">
-      </div>`
+    switch (field.type) {
+      case "textarea": 
+        fields_html += `
+        <div class="f3-form-field">
+          <label>${field.label}</label>
+          <textarea name="${field.id}" 
+            placeholder="${field.label}">${field.initial_value || ''}</textarea>
+        </div>`
+      case "select": {
+        const select_field = field as SelectField
+        fields_html += `
+        <div class="f3-form-field">
+          <label>${select_field.label}</label>
+          <select name="${select_field.id}" value="${select_field.initial_value || ''}" ${select_field.required ? `required=""` : ""}>
+            <option value="">${select_field.placeholder || `Select ${select_field.label}`}</option>
+            ${select_field.options.map((option) => `<option ${option.value === select_field.initial_value ? 'selected' : ''} value="${option.value}">${option.label}</option>`).join('')}
+          </select>
+        </div>`
+      }
+      case "rel_reference": 
+        fields_html += `
+        <div class="f3-form-field">
+          <label>${field.label} - <i>${field.rel_label}</i></label>
+          <input type="text" 
+            name="${field.id}" 
+            value="${field.initial_value || ''}"
+            placeholder="${field.label}">
+        </div>`
+      default:
+        fields_html += `
+        <div class="f3-form-field">
+          <label>${field.label}</label>
+          <input type="${field.type}" 
+            name="${field.id}" 
+            value="${field.initial_value || ''}"
+            ${field.required ? `required=""` : ""}
+            placeholder="${field.label}">
+        </div>`
     }
   })
   return fields_html

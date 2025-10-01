@@ -69,6 +69,7 @@ export interface Field {
   label: string;
   initial_value: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 export interface RelReferenceField extends Field {
