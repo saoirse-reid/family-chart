@@ -115,6 +115,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
         <div class="f3-form-field">
           <label>${field.label}</label>
           <textarea name="${field.id}" 
+            ${field.required ? `required` : ""}
             placeholder="${field.label}">${field.initial_value || ''}</textarea>
         </div>`
       case "select": {
@@ -122,7 +123,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
         fields_html += `
         <div class="f3-form-field">
           <label>${select_field.label}</label>
-          <select name="${select_field.id}" value="${select_field.initial_value || ''}" ${select_field.required ? `required=""` : ""}>
+          <select name="${select_field.id}" value="${select_field.initial_value || ''}" ${select_field.required ? `required` : ""}>
             <option value="">${select_field.placeholder || `Select ${select_field.label}`}</option>
             ${select_field.options.map((option) => `<option ${option.value === select_field.initial_value ? 'selected' : ''} value="${option.value}">${option.label}</option>`).join('')}
           </select>
@@ -144,7 +145,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
           <input type="${field.type}" 
             name="${field.id}" 
             value="${field.initial_value || ''}"
-            ${field.required ? `required=""` : ""}
+            ${field.required ? `required` : ""}
             placeholder="${field.label}">
         </div>`
     }
