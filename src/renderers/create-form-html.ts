@@ -118,6 +118,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
             ${field.required ? `required` : ""}
             placeholder="${field.label}">${field.initial_value || ''}</textarea>
         </div>`
+        break;
       case "select": {
         const select_field = field as SelectField
         fields_html += `
@@ -128,6 +129,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
             ${select_field.options.map((option) => `<option ${option.value === select_field.initial_value ? 'selected' : ''} value="${option.value}">${option.label}</option>`).join('')}
           </select>
         </div>`
+        break;
       }
       case "rel_reference": 
         fields_html += `
@@ -138,6 +140,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
             value="${field.initial_value || ''}"
             placeholder="${field.label}">
         </div>`
+        break;
       default:
         fields_html += `
         <div class="f3-form-field">
@@ -148,6 +151,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
             ${field.required ? `required` : ""}
             placeholder="${field.label}">
         </div>`
+        break;
     }
   })
   return fields_html
