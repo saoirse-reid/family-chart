@@ -97,5 +97,6 @@ export interface SelectFieldCreator {
   label: string;
   placeholder?: string;
   options?: {value: string; label: string}[];
+  required?: boolean;
   optionCreator?: (datum: Datum) => {value: string; label: string}[];
 }
