@@ -23,7 +23,7 @@ export default CardElements
 function miniTree(d: TreeDatum, props: {card_dim: CardDim, onMiniTreeClick?: (e: MouseEvent, d: TreeDatum) => void, store: Store}) {
   if (d.data.to_add) return
   const card_dim = props.card_dim;
-  if (d.all_rels_displayed) return
+  if (d.all_children_displayed && d.all_non_children_displayed) return
   const g = d3.create('svg:g').html(MiniTree({d,card_dim}).template)
   g.on("click", function (e) {
     e.stopPropagation();

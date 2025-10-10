@@ -158,7 +158,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
 
   function infoField() {
     let fields_html = ''
-    form_creator.fields.forEach(field => {
+    form_creator.fields.forEach(field =>  {
       if (field.type === 'rel_reference') {
         if (!field.initial_value) return
         fields_html += `
@@ -175,6 +175,7 @@ function fields(form_creator: EditDatumFormCreator | NewRelFormCreator) {
           <span class="f3-info-field-value">${select_field.options.find(option => option.value === select_field.initial_value)?.label || ''}</span>
         </div>`
       } else {
+        if (!field.initial_value) return;
         fields_html += `
         <div class="f3-info-field">
           <span class="f3-info-field-label">${field.label}</span>

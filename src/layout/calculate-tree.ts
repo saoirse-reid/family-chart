@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { sortChildrenWithSpouses, sortAddNewChildren, setupSiblings, handlePrivateCards } from "./handlers";
 import { createNewPerson } from "../store/new-person";
-import { isAllRelativeDisplayed } from "../handlers/general";
+import { isAllChildrenDisplayed, isAllNonChildrenDisplayed } from "../handlers/general";
 import { handleDuplicateSpouseToggle, handleDuplicateHierarchyProgeny } from "../features/duplicates-toggle/duplicates-progeny";
 import { handleDuplicateHierarchyAncestry } from "../features/duplicates-toggle/duplicates-ancestry";
 import type { Datum, Data } from "../types/data";
@@ -73,7 +73,8 @@ export default function calculateTree(data: Data, {
   if (show_siblings_of_main && !one_level_rels) setupSiblings({tree, data_stash, node_separation, sortChildrenFunction})
   setupProgenyParentsPos(tree)
   nodePositioning(tree)
-  tree.forEach(d => d.all_rels_displayed = isAllRelativeDisplayed(d, tree))
+  tree.forEach(d => d.all_non_children_displayed = isAllNonChildrenDisplayed(d, tree))
+  tree.forEach(d => d.all_children_displayed = isAllChildrenDisplayed(d, tree))
   if (private_cards_config) handlePrivateCards({tree, data_stash, private_cards_config})
   setupTid(tree)
   // setupFromTo(tree)

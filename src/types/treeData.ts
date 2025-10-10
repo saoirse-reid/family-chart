@@ -46,8 +46,11 @@ export interface TreeDatum {
   /** True if the node was just added. */
   added?: boolean;
 
-  /** True if not all relatives of this person are displayed in the current tree view. */
-  all_rels_displayed?: boolean;
+  /** True if all relatives of this person are displayed in the current tree view. */
+  all_non_children_displayed?: boolean;
+
+  /** True if all children of this person are displayed in the current tree view. */
+  all_children_displayed?: boolean;
 
   /** Children of this node (main person and progeny). */
   children?: TreeDatum[];

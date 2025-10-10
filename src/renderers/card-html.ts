@@ -102,8 +102,14 @@ export default function CardHtml(props: {
     if (!props.mini_tree) return ''
     if (d.data.to_add) return ''
     if (d.data._new_rel_data) return ''
-    if (d.all_rels_displayed) return ''
-    return `<div class="mini-tree">${miniTreeSvgIcon()}</div>`
+    let response = '';
+    if (!d.all_children_displayed) {
+      response += `<div class="mini-tree" style="transform: translate(0, 85px) scale(1,-1)"}>${miniTreeSvgIcon()}</div>`
+    }
+    if (!d.all_non_children_displayed) {
+      response += `<div class="mini-tree">${miniTreeSvgIcon()}</div>`;
+    }
+    return response;
   }
 
   function cardInnerImageCircleRect(d: TreeDatum) {
