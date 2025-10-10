@@ -88,13 +88,19 @@ export interface ZoomProps {
 }
 
 
-export function setupZoom(el: any, props: ZoomProps = {}) {
+export function setupZoom(el: any, bounds: DOMRect, props: ZoomProps = {}) {
   if (el.__zoom) {
     console.log('zoom already setup')
     return
   }
   const view = el.querySelector('.view')!
-  const zoom = d3.zoom().on("zoom", (props.onZoom || zoomed))
+  const zoom = d3.zoom()
+    .scaleExtent([0.4, 2.5])
+    .translateExtent([
+      [0, 0], // Min Pan
+      [bounds.width, bounds.height], // Max Pan
+    ])
+    .on("zoom", (props.onZoom || zoomed))
 
   d3.select(el).call(zoom)
   el.__zoomObj = zoom
