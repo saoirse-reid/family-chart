@@ -104,12 +104,11 @@ export default function CardHtml(props: {
     if (d.data._new_rel_data) return ''
     if (d.all_rels_displayed) return ''
     let response = '';
-    console.log(d);
     if (d.data.rels.father || d.data.rels.mother) {
       response += `<div class="mini-tree">${miniTreeSvgIcon()}</div>`;
     }
     if (d.data.rels.children && d.data.rels.children.length > 0) {
-      response += `<div class="mini-tree" transform="translate(0, 85px) scale(1,-1)"}>${miniTreeSvgIcon()}</div>`
+      response += `<div class="mini-tree" style="transform: translate(0, 85px) scale(1,-1)"}>${miniTreeSvgIcon()}</div>`
     }
     return response;
   }
