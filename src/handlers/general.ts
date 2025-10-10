@@ -1,9 +1,14 @@
 import { TreeDatum } from "../types/treeData";
 import { Tree } from "../layout/calculate-tree";
 
-export function isAllRelativeDisplayed(d: TreeDatum, data: TreeDatum[]) {
+export function isAllNonChildrenDisplayed(d: TreeDatum, data: TreeDatum[]) {
   const r = d.data.rels
-  const all_rels = [r.father, r.mother, ...(r.spouses || []), ...(r.children || [])].filter(v => v)
+  const all_rels = [r.father, r.mother, ...(r.spouses || [])].filter(v => v)
+  return all_rels.every(rel_id => data.some(d => d.data.id === rel_id))
+}
+export function isAllChildrenDisplayed(d: TreeDatum, data: TreeDatum[]) {
+  const r = d.data.rels
+  const all_rels = [...(r.children || [])].filter(v => v)
   return all_rels.every(rel_id => data.some(d => d.data.id === rel_id))
 }
 
