@@ -1,39 +1,34 @@
 {
-  "name": "family-chart",
-  "version": "0.8.0",
+  "name": "leafplanner-family-chart",
+  "version": "0.1.7",
   "type": "module",
   "description": "family tree creator and viewer",
-  "keywords": [
-    "datafull",
-    "family-chart",
-    "family tree",
-    "d3"
-  ],
-  "homepage": "https://donatso.github.io/family-chart/",
-  "license": "ISC",
+  "keywords": [],
+  "homepage": "",
+  "license": "MIT",
   "author": {
-    "name": "donatso"
+    "name": "leafplanner"
   },
-  "main": "dist/family-chart.js",
+  "main": "dist/leafplanner-family-chart.js",
   "types": "dist/types/index.d.ts",
-  "unpkg": "dist/family-chart.min.js",
-  "module": "dist/family-chart.esm.js",
+  "unpkg": "dist/leafplanner-family-chart.min.js",
+  "module": "dist/leafplanner-family-chart.esm.js",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/types/index.d.ts",
-        "default": "./dist/family-chart.esm.js"
+        "default": "./dist/leafplanner-family-chart.esm.js"
       },
       "require": {
         "types": "./dist/types/index.d.ts",
-        "default": "./dist/family-chart.js"
+        "default": "./dist/leafplanner-family-chart.js"
       }
     },
     "./styles/*": "./dist/styles/*"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/donatso/family-chart.git"
+    "url": "git+https://github.com/saoirse-reid/family-chart.git"
   },
   "files": [
     "dist/**/*.js",
