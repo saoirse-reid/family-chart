@@ -96,10 +96,6 @@ export function setupZoom(el: any, bounds: DOMRect, props: ZoomProps = {}) {
   const view = el.querySelector('.view')!
   const zoom = d3.zoom()
     .scaleExtent([0.4, 2.5])
-    .translateExtent([
-      [0, 0], // Min Pan
-      [bounds.width, bounds.height], // Max Pan
-    ])
     .on("zoom", (props.onZoom || zoomed))
 
   d3.select(el).call(zoom)
