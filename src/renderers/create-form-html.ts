@@ -27,7 +27,7 @@ export function getHtmlEdit(form_creator: EditDatumFormCreator) {
       ${closeBtn()}
       <div style="text-align: right; display: 'block'">
         ${!form_creator.no_edit ? addRelativeBtn(form_creator) : ''}
-        ${!form_creator.can_delete ? addDeleteBtn() : ''}
+        ${form_creator.can_delete ? addDeleteBtn() : ''}
         ${form_creator.no_edit ? spaceDiv() : editBtn(form_creator)}
       </div>
 
