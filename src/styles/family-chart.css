@@ -250,6 +250,14 @@
   display: inline-block;
 }
 
+.f3-quick-delete-btn {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  display: inline-block;
+}
+
 /* card-html */
 
 .f3 div.card {

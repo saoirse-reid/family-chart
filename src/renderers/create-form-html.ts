@@ -27,6 +27,7 @@ export function getHtmlEdit(form_creator: EditDatumFormCreator) {
       ${closeBtn()}
       <div style="text-align: right; display: 'block'">
         ${!form_creator.no_edit ? addRelativeBtn(form_creator) : ''}
+        ${!form_creator.can_delete ? addDeleteBtn() : ''}
         ${form_creator.no_edit ? spaceDiv() : editBtn(form_creator)}
       </div>
 
@@ -75,6 +76,14 @@ function addRelativeBtn(form_creator: EditDatumFormCreator) {
   return (`
     <span class="f3-add-relative-btn">
       ${form_creator.addRelativeActive ? icons.userPlusCloseSvgIcon() : icons.userPlusSvgIcon()}
+    </span>
+  `)
+}
+
+function addDeleteBtn() {
+  return (`
+    <span class="f3-quick-delete-btn">
+      ${icons.userDeleteSvgIcon()}
     </span>
   `)
 }

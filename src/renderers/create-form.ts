@@ -71,6 +71,11 @@ function setupEventListenersEdit(formContainer: HTMLElement, form_creator: EditD
     delete_btn.addEventListener('click', form_creator.onDelete);
   }
 
+  const delete_quick_btn = form.querySelector(".f3-quick-delete-btn");
+  if (delete_quick_btn && form_creator.can_delete && form_creator.onDelete) {
+    delete_quick_btn.addEventListener("click", form_creator.onDelete);
+  }
+
   const add_relative_btn = form.querySelector('.f3-add-relative-btn');
   if (add_relative_btn && form_creator.addRelative) {
     add_relative_btn.addEventListener('click', () => {

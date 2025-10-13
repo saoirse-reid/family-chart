@@ -10,7 +10,8 @@ export default function createSvg(cont: HTMLElement, props: ZoomProps = {}) {
           <circle cx="10" cy="10" r="1" fill="#FFF"></circle>
         </pattern>
       </defs>
-      <rect id="background" x=${-svg_dim.width * 3} y=${-svg_dim.height * 3} width="${svg_dim.width * 6}" height="${svg_dim.height * 6}" fill="url(#grid)" />
+      <rect id="background" x=${-svg_dim.width * 10} y=${-svg_dim.height * 10} 
+        width="${svg_dim.width * 20}" height="${svg_dim.height * 20}" fill="url(#grid)" />
       <g class="view">
         <g class="links_view"></g>
         <g class="cards_view"></g>
@@ -34,7 +35,7 @@ export default function createSvg(cont: HTMLElement, props: ZoomProps = {}) {
 
   cont.appendChild(f3Canvas)
 
-  setupZoom(f3Canvas, svg_dim, props)
+  setupZoom(f3Canvas, props)
 
   return svg
 

@@ -88,7 +88,7 @@ export interface ZoomProps {
 }
 
 
-export function setupZoom(el: any, bounds: DOMRect, props: ZoomProps = {}) {
+export function setupZoom(el: any, props: ZoomProps = {}) {
   if (el.__zoom) {
     console.log('zoom already setup')
     return
