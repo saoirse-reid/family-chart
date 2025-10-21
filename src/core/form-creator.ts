@@ -31,8 +31,8 @@ export function formCreatorSetup({
   canEdit,
   canDelete,
 }: FormCreatorSetupProps) {
-  let can_delete = canDelete ? canDelete(datum) : true
-  const can_edit = canEdit ? canEdit(datum) : true
+  let can_delete = canDelete ? canDelete(datum, store.getData()) : true
+  const can_edit = canEdit ? canEdit(datum, store.getData()) : true
   if (!can_edit) {
     no_edit = true
     can_delete = false

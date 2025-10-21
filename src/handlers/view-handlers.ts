@@ -94,7 +94,9 @@ export function setupZoom(el: any, props: ZoomProps = {}) {
     return
   }
   const view = el.querySelector('.view')!
-  const zoom = d3.zoom().on("zoom", (props.onZoom || zoomed))
+  const zoom = d3.zoom()
+    .scaleExtent([0.4, 2.5])
+    .on("zoom", (props.onZoom || zoomed))
 
   d3.select(el).call(zoom)
   el.__zoomObj = zoom

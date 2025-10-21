@@ -18,6 +18,15 @@ export function userEditIcon() {
   `)
 }
 
+export function userDeleteIcon() {
+  return (`
+    <g data-icon="user-delete">
+      ${bgCircle()}
+      <path d="M268,220 C268,219.448 268.448,219 269,219 C269.552,219 270,219.448 270,220 L270,232 C270,232.553 269.552,233 269,233 C268.448,233 268,232.553 268,232 L268,220 L268,220 Z M273,220 C273,219.448 273.448,219 274,219 C274.552,219 275,219.448 275,220 L275,232 C275,232.553 274.552,233 274,233 C273.448,233 273,232.553 273,232 L273,220 L273,220 Z M278,220 C278,219.448 278.448,219 279,219 C279.552,219 280,219.448 280,220 L280,232 C280,232.553 279.552,233 279,233 C278.448,233 278,232.553 278,232 L278,220 L278,220 Z M263,233 C263,235.209 264.791,237 267,237 L281,237 C283.209,237 285,235.209 285,233 L285,217 L263,217 L263,233 L263,233 Z M277,209 L271,209 L271,208 C271,207.447 271.448,207 272,207 L276,207 C276.552,207 277,207.447 277,208 L277,209 L277,209 Z M285,209 L279,209 L279,207 C279,205.896 278.104,205 277,205 L271,205 C269.896,205 269,205.896 269,207 L269,209 L263,209 C261.896,209 261,209.896 261,211 L261,213 C261,214.104 261.895,214.999 262.999,215 L285.002,215 C286.105,214.999 287,214.104 287,213 L287,211 C287,209.896 286.104,209 285,209 L285,209 Z" />
+    </g>
+  `)
+}
+
 export function userPlusIcon() {
   return (`
     <g data-icon="user-plus">
@@ -174,31 +183,33 @@ export function infoIcon() {
   `)
 }
 
-export function userSvgIcon() { return svgWrapper(userIcon()) }
-export function userEditSvgIcon() { return svgWrapper(userEditIcon()) }
-export function userPlusSvgIcon() { return svgWrapper(userPlusIcon()) }
-export function userPlusCloseSvgIcon() { return svgWrapper(userPlusCloseIcon()) }
-export function plusSvgIcon() { return svgWrapper(plusIcon()) }
-export function pencilSvgIcon() { return svgWrapper(pencilIcon()) }
-export function pencilOffSvgIcon() { return svgWrapper(pencilOffIcon()) }
-export function trashSvgIcon() { return svgWrapper(trashIcon()) }
-export function historyBackSvgIcon() { return svgWrapper(historyBackIcon()) }
-export function historyForwardSvgIcon() { return svgWrapper(historyForwardIcon()) }
-export function personSvgIcon() { return svgWrapper(personIcon(), '0 0 512 512') }
-export function miniTreeSvgIcon() { return svgWrapper(miniTreeIcon(), '0 0 72 25') }
-export function toggleSvgIconOn() { return svgWrapper(toggleIconOn()) }
-export function toggleSvgIconOff() { return svgWrapper(toggleIconOff()) }
-export function chevronDownSvgIcon() { return svgWrapper(chevronDownIcon()) }
-export function chevronUpSvgIcon() { return svgWrapper(chevronUpIcon()) }
-export function linkOffSvgIcon() { return svgWrapper(linkOffIcon()) }
-export function infoSvgIcon() { return svgWrapper(infoIcon()) }
+export function userSvgIcon() { return svgWrapper(userIcon(), '') }
+export function userEditSvgIcon() { return svgWrapper(userEditIcon(), '') }
+export function userDeleteSvgIcon() { return svgWrapper(userDeleteIcon(), 'Remove Family Member', "256 206 36 36") }
+export function userPlusSvgIcon() { return svgWrapper(userPlusIcon(), 'Add Relative') }
+export function userPlusCloseSvgIcon() { return svgWrapper(userPlusCloseIcon(), 'Stop Adding Relatives') }
+export function plusSvgIcon() { return svgWrapper(plusIcon(), '') }
+export function pencilSvgIcon() { return svgWrapper(pencilIcon(), 'Edit') }
+export function pencilOffSvgIcon() { return svgWrapper(pencilOffIcon(), 'Stop Editing') }
+export function trashSvgIcon() { return svgWrapper(trashIcon(), '') }
+export function historyBackSvgIcon() { return svgWrapper(historyBackIcon(), '') }
+export function historyForwardSvgIcon() { return svgWrapper(historyForwardIcon(), '') }
+export function personSvgIcon() { return svgWrapper(personIcon(), '', '0 0 512 512') }
+export function miniTreeSvgIcon() { return svgWrapper(miniTreeIcon(), '', '0 0 72 25') }
+export function toggleSvgIconOn() { return svgWrapper(toggleIconOn(), '') }
+export function toggleSvgIconOff() { return svgWrapper(toggleIconOff(), '') }
+export function chevronDownSvgIcon() { return svgWrapper(chevronDownIcon(), '') }
+export function chevronUpSvgIcon() { return svgWrapper(chevronUpIcon(), '') }
+export function linkOffSvgIcon() { return svgWrapper(linkOffIcon(), '') }
+export function infoSvgIcon() { return svgWrapper(infoIcon(), '') }
 
-function svgWrapper(icon: string, viewBox='0 0 24 24') {
+function svgWrapper(icon: string, label: string, viewBox='0 0 24 24') {
   const match = icon.match(/data-icon="([^"]+)"/);
   const dataIcon = match ? `data-icon="${match[1]}"` : '';
   
   return (`
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" style="fill: currentColor" ${dataIcon}>
+      ${label && `<title>${label}</title>`}
       ${icon}
     </svg>
   `)

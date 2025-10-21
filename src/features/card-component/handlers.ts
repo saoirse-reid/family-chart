@@ -12,8 +12,9 @@ export default function cardComponentSetup(cont: HTMLElement) {
   const getSvgView = () => cont.querySelector('svg .view') as HTMLElement
   const getHtmlSvg = () => cont.querySelector('#htmlSvg') as HTMLElement
   const getHtmlView = () => cont.querySelector('#htmlSvg .cards_view') as HTMLElement
+  const getBackgroundView = () => cont.querySelector('rect#background') as HTMLElement;
 
-  createSvg(cont, {onZoom: onZoomSetup(getSvgView, getHtmlView)})
+  createSvg(cont, {onZoom: onZoomSetup(getSvgView, getHtmlView, getBackgroundView)})
   d3.select(getHtmlSvg()).append("div").attr("class", "cards_view_fake").style('display', 'none')  // important for handling data
 
   return setupReactiveTreeData(getHtmlSvg)

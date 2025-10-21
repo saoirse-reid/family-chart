@@ -5,7 +5,13 @@ export default function createSvg(cont: HTMLElement, props: ZoomProps = {}) {
   const svg_dim = cont.getBoundingClientRect();
   const svg_html = (`
     <svg class="main_svg">
-      <rect width="${svg_dim.width}" height="${svg_dim.height}" fill="transparent" />
+      <defs>
+        <pattern id="grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="1" fill="#FFF"></circle>
+        </pattern>
+      </defs>
+      <rect id="background" x=${-svg_dim.width * 10} y=${-svg_dim.height * 10} 
+        width="${svg_dim.width * 20}" height="${svg_dim.height * 20}" fill="url(#grid)" />
       <g class="view">
         <g class="links_view"></g>
         <g class="cards_view"></g>
