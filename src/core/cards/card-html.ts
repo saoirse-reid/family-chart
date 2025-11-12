@@ -34,6 +34,7 @@ export class CardHtml {
   card_dim: { [key: string]: number | boolean }
   cardInnerHtmlCreator: undefined | ((d:TreeDatum) => string)
   defaultPersonIcon: undefined | ((d:TreeDatum) => string)
+  defaultGenderIcon: undefined | ((d: TreeDatum) => string)
   onCardMouseenter: undefined | ((e:Event, d:TreeDatum) => void)
   onCardMouseleave: undefined | ((e:Event, d:TreeDatum) => void)
   to_transition: Datum['id'] | undefined | false
@@ -58,6 +59,7 @@ export class CardHtml {
       card_display: this.card_display,
       cardImageField: this.cardImageField,
       defaultPersonIcon: this.defaultPersonIcon,
+      defaultGenderIcon: this.defaultGenderIcon,
       onCardClick: this.onCardClick,
       style: this.style,
       mini_tree: this.mini_tree,
@@ -86,6 +88,10 @@ export class CardHtml {
   setDefaultPersonIcon(defaultPersonIcon: CardHtml['defaultPersonIcon']) {
     this.defaultPersonIcon = defaultPersonIcon
     return this
+  }
+  setDefaultGenderIcon(defaultGenderIcon: CardHtml["defaultGenderIcon"]) {
+    this.defaultGenderIcon = defaultGenderIcon;
+    return this;
   }
   
   setOnCardClick(onCardClick: CardHtml['onCardClick']) {

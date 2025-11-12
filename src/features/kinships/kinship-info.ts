@@ -87,7 +87,7 @@ function createSmallTree(
   create(small_chart_data)
 
   function create(data: DatumKinship[]) {
-    const f3Chart = createChart('#SmallChart', data)
+    const f3Chart = createChart('#SmallChart', data, () => {})
       .setTransitionTime(500)
       .setCardXSpacing(170)
       .setCardYSpacing(70)

@@ -15,6 +15,7 @@ export default function CardHtml(props: {
   mini_tree: boolean;
   card_dim: CardDim;
   defaultPersonIcon?: (d: TreeDatum) => string;
+  defaultGenderIcon?: (d: TreeDatum) => string;
   empty_card_label: string;
   unknown_card_label: string;
   cardImageField: string;
@@ -68,6 +69,7 @@ export default function CardHtml(props: {
     <div class="card-inner card-image-rect" ${getCardStyle()}>
       ${d.data.data[props.cardImageField] ? `<img src="${d.data.data[props.cardImageField]}" ${getCardImageStyle()}>` : noImageIcon(d)}
       <div class="card-label">${textDisplay(d)}</div>
+      <div class="family-gender">${props.defaultGenderIcon ? props.defaultGenderIcon(d) : ''}</div>
       ${d.duplicate ? getCardDuplicateTag(d) : ''}
     </div>
     `)
@@ -87,7 +89,7 @@ export default function CardHtml(props: {
     if (d.data.to_add) return `<div>${props.empty_card_label || 'ADD'}</div>`
     if (d.data.unknown) return `<div>${props.unknown_card_label || 'UNKNOWN'}</div>`
     return (`
-      ${props.card_display.map(display => `<div>${display(d.data)}</div>`).join('')}
+      ${props.card_display.map((display, index) => `<div style="line-height: 1.2; font-size: ${index > 0 ? 0.75 : 1}em">${display(d.data)}</div>`).join('')}
     `)
   }
 

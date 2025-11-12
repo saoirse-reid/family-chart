@@ -21,8 +21,8 @@ import { ViewProps } from "../renderers/view"
 import { KinshipInfoConfig } from "../features/kinships/calculate-kinships"
 type LinkSpouseText = ((sp1: TreeDatum, sp2: TreeDatum) => string) | null
 
-export default function createChart(cont: HTMLElement | string, data: Data) {
-  return new Chart(cont, data)
+export default function createChart(cont: HTMLElement | string, data: Data, afterZoom: (zoom: number) => void) {
+  return new Chart(cont, data, afterZoom)
 }
 
 /**
@@ -49,13 +49,14 @@ export class Chart {
   transition_time: number
   linkSpouseText: LinkSpouseText | null
   personSearch: any
-  beforeUpdate: Function | null
-  afterUpdate: Function | null
+  beforeUpdate: Function | null;
+  afterUpdate: Function | null;
+  afterZoom: Function | null;
 
   editTreeInstance: EditTree | null
 
 
-  constructor(cont: HTMLElement | string, data: Data) {
+  constructor(cont: HTMLElement | string, data: Data, afterZoom?: (zoom: number) => void) {
     this.getCard = null
     this.transition_time = 2000
     this.linkSpouseText = null
@@ -65,10 +66,11 @@ export class Chart {
   
     this.beforeUpdate = null
     this.afterUpdate = null
+    this.afterZoom = null;
     
 
     this.cont = setCont(cont)
-    const {svg} = htmlContSetup(this.cont)
+    const {svg} = htmlContSetup(this.cont, afterZoom);
     this.svg = svg
     createNavCont(this.cont)
     const main_id = data && data.length > 0 ? data[0].id : ''

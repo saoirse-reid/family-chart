@@ -1,7 +1,6 @@
 import * as d3 from "d3"
 import { formCreatorSetup } from "./form-creator"
 import { createHistory, createHistoryControls, HistoryWithControls } from "../features/history"
-import { createFormEdit, createFormNew } from "../renderers/create-form"
 import addRelative from "./add-relative"
 import { deletePerson, cleanupDataJson } from "../store/edit"
 import { handleLinkRel } from "../store/add-existing-rel"
@@ -12,7 +11,7 @@ import { Store } from "../types/store"
 import { Data, Datum } from "../types/data"
 import { TreeDatum } from "../types/treeData"
 import { AddRelative } from "./add-relative"
-import { EditDatumFormCreator, FormCreator, FormCreatorSetupProps, NewRelFormCreator } from "../types/form"
+import { Field, FormCreator, FormCreatorSetupProps } from "../types/form"
 import { CardHtml } from "./cards/card-html"
 import { CardSvg } from "./cards/card-svg"
 
@@ -47,12 +46,10 @@ export default (cont: HTMLElement, store: Store) => new EditTree(cont, store)
 export class EditTree {
   cont: HTMLElement
   store: Store
-  fields: {type: string, label: string, id: string}[]
+  fields: Field[]
   formCont: {
-    el?: HTMLElement,
-    populate: (form_element: HTMLElement) => void,
-    open: () => void,
-    close: () => void,
+    open: (datum: Datum) => void;
+    close: () => void;
   }
   is_fixed: boolean
   no_edit: boolean
@@ -80,10 +77,10 @@ export class EditTree {
     this.store = store
   
     this.fields = [
-      {type: 'text', label: 'first name', id: 'first name'},
-      {type: 'text', label: 'last name', id: 'last name'},
-      {type: 'text', label: 'birthday', id: 'birthday'},
-      {type: 'text', label: 'avatar', id: 'avatar'}
+      {type: 'text', label: 'first name', id: 'first name', initial_value: ''},
+      {type: 'text', label: 'last name', id: 'last name',  initial_value: ''},
+      {type: 'text', label: 'birthday', id: 'birthday',  initial_value: ''},
+      {type: 'text', label: 'avatar', id: 'avatar',  initial_value: ''}
     ]
   
     this.is_fixed = true
@@ -222,21 +219,9 @@ export class EditTree {
   }
 
   private getFormContDefault() {
-    let form_cont = d3.select(this.cont).select('div.f3-form-cont').node() as HTMLElement
-    if (!form_cont) form_cont = d3.select(this.cont).append('div').classed('f3-form-cont', true).node()!
-
     return {
-      el: form_cont,
-      populate(form_element: HTMLElement) {
-        form_cont.innerHTML = ''
-        form_cont.appendChild(form_element)
-      },
-      open() {
-        d3.select(form_cont).classed('opened', true)
-      },
-      close() {
-        d3.select(form_cont).classed('opened', false).html('')
-      },
+      open(datum: Datum) {},
+      close() {},
     }
   }
 
@@ -281,15 +266,9 @@ export class EditTree {
       canEdit: this.canEdit,
       canDelete: this.canDelete,
       ...props
-    })
+    });
   
-    const form_cont = is_new_rel
-      ? (this.createFormNew || createFormNew)(form_creator as NewRelFormCreator, this.closeForm.bind(this))
-      : (this.createFormEdit || createFormEdit)(form_creator as EditDatumFormCreator, this.closeForm.bind(this))
-  
-    this.formCont.populate(form_cont)
-  
-    this.openForm()
+    this.openForm(datum)
   
     function postSubmitHandler(self: EditTree, props: any) {
       if (self.addRelativeInstance.is_active) {
@@ -316,8 +295,8 @@ export class EditTree {
     }
   }
   
-  openForm() {
-    this.formCont.open()
+  openForm(datum: Datum, ) {
+    this.formCont.open(datum)
   }
   
   closeForm() {
@@ -327,14 +306,12 @@ export class EditTree {
   
   fixed() {
     this.is_fixed = true
-    if (this.formCont.el) d3.select(this.formCont.el).style('position', 'relative')
   
     return this
   }
   
   absolute() {
     this.is_fixed = false
-    if (this.formCont.el) d3.select(this.formCont.el).style('position', 'absolute')
   
     return this
   }
@@ -522,7 +499,6 @@ export class EditTree {
   destroy() {
     this.history.controls.destroy()
     this.history = null as any
-    if (this.formCont.el) d3.select(this.formCont.el).remove()
     if (this.addRelativeInstance.onCancel) this.addRelativeInstance.onCancel()
     this.store.updateTree({})
   
