@@ -65,11 +65,18 @@ export default function CardHtml(props: {
   }
 
   function getCardInnerImageRect(d: TreeDatum) {
+    let gender = "Other"
+    if (d.data.data.gender === "F") {
+      gender = "Female"
+    }
+    if (d.data.data.gender === "M") {
+      gender = "Male"
+    }
     return (`
     <div class="card-inner card-image-rect" ${getCardStyle()}>
       ${d.data.data[props.cardImageField] ? `<img src="${d.data.data[props.cardImageField]}" ${getCardImageStyle()}>` : noImageIcon(d)}
       <div class="card-label">${textDisplay(d)}</div>
-      <div class="family-gender">${props.defaultGenderIcon ? props.defaultGenderIcon(d) : ''}</div>
+      <div class="family-gender" title="${gender}">${props.defaultGenderIcon ? props.defaultGenderIcon(d) : ''}</div>
       ${d.duplicate ? getCardDuplicateTag(d) : ''}
     </div>
     `)
