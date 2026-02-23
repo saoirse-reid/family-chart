@@ -84,28 +84,26 @@ export function addDatumRelsPlaceholders(
   }
 
   function addSpouseForSingleParentChildren() {
-    if (!datum.rels.spouses) datum.rels.spouses = []
-    if (datum.rels.children) {
-      let new_spouse: NewDatum | undefined;
-      datum.rels.children.forEach(child_id => {
-        const child = store_data.find(d => d.id === child_id)!
+    if (!datum.rels.spouses) datum.rels.spouses = [];
+    const singleParentChildren = datum.rels.children
+      ?.map((id) => store_data.find(d => d.id === id)!)
+      ?.filter((child) => !child.rels.mother || !child.rels.father);
+
+    if (singleParentChildren && singleParentChildren.length > 0) {
+      let new_spouse: NewDatum = createNewPerson({data: {gender: datum.data.gender === "F" ? "M" : "F"}, rels: {spouses: [datum.id], children: []}})
+      new_spouse._new_rel_data = {rel_type: "spouse", label: addRelLabels.spouse, rel_id: datum.id}
+
+      singleParentChildren.forEach(child => {
+        new_spouse.rels.children!.push(child.id)
         if (!child.rels.mother) {
-          if (!new_spouse) new_spouse = createNewPerson({data: {gender: "F"}, rels: {spouses: [datum.id], children: []}})
-          new_spouse._new_rel_data = {rel_type: "spouse", label: addRelLabels.spouse, rel_id: datum.id}
-          new_spouse.rels.children!.push(child.id)
-          datum.rels.spouses!.push(new_spouse.id)
           child.rels.mother = new_spouse.id
-          store_data.push(new_spouse)
-        }
-        if (!child.rels.father) {
-          if (!new_spouse) new_spouse = createNewPerson({data: {gender: "M"}, rels: {spouses: [datum.id], children: []}})
-          new_spouse._new_rel_data = {rel_type: "spouse", label: addRelLabels.spouse, rel_id: datum.id}
-          new_spouse.rels.children!.push(child.id)
-          datum.rels.spouses!.push(new_spouse.id)
+        } else if (!child.rels.father) {
           child.rels.father = new_spouse.id
-          store_data.push(new_spouse)
         }
-      })
+      });
+
+      datum.rels.spouses!.push(new_spouse.id);
+      store_data.push(new_spouse)
     }
   }
   
